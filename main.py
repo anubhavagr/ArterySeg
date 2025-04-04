@@ -2,7 +2,7 @@ import torch
 import torch.optim as optim
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 from torch.utils.data import DataLoader
-from model import StentDetectionModel, device
+from model import ArterySegModel, device
 from dataset import StentDataset
 from train import train, validate
 from config import BATCH_SIZE, LR, EPOCHS, NUM_WORKERS, INPUT_PATH, VAL_INPUT_PATH, MASK_PATH, VAL_MASK_PATH, MODEL_NAME
@@ -10,7 +10,7 @@ from cbDice.loss import cldice_loss
 
 torch.backends.cudnn.benchmark = True
 
-model = StentDetectionModel(in_ch=1, sobel_ch=64)
+model = ArterySegModel(in_ch=1, sobel_ch=64)
 model.to(device)
 
 optimizer = optim.Adam(model.parameters(), lr=LR)

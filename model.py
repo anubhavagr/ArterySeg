@@ -67,9 +67,9 @@ class SobelConv2d(nn.Module):
                         self.stride, self.padding, self.dilation, self.groups)
 
 # Headings: Stent Detection Model
-class StentDetectionModel(nn.Module):
+class ArterySegModel(nn.Module):
     def __init__(self, in_ch=1, sobel_ch=32):
-        super(StentDetectionModel, self).__init__()
+        super(ArterySegModel, self).__init__()
         self.conv_sobel = SobelConv2d(in_ch, sobel_ch, kernel_size=3, stride=1, padding=1, bias=True, requires_grad=False)
         self.backbone = models.resnet34(weights=models.ResNet34_Weights.DEFAULT)
         self.spatial_attention = SpatialAttention()
