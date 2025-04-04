@@ -1,0 +1,3 @@
+[submodule "cbDice"]
+	path = cbDice
+	url = https://github.com/PengchengShi1220/cbDice
