@@ -2,10 +2,14 @@ import torch
 import torch.optim as optim
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 from torch.utils.data import DataLoader
-from model import ArterySegModel, device
+
+#from model import ArterySegModel, device   #resnet34 with attention
+from model_unet import ArterySegModel, device   #resnet50 unet++
+# Note- above import should be matched in export_and_benchmark.py 
+
 from dataset import StentDataset
 from train import train, validate
-from config import BATCH_SIZE, LR, EPOCHS, NUM_WORKERS, INPUT_PATH, VAL_INPUT_PATH, MASK_PATH, VAL_MASK_PATH, MODEL_NAME
+from config import BATCH_SIZE, LR, EPOCHS, NUM_WORKERS, INPUT_PATH, VAL_INPUT_PATH, MASK_PATH, VAL_MASK_PATH, RESULTS_FOLDER_NAME
 from cbDice.loss import cldice_loss
 
 torch.backends.cudnn.benchmark = True
@@ -32,6 +36,6 @@ train_losses = []
 scaler = torch.cuda.amp.GradScaler()
 
 for epoch in range(EPOCHS):
-    train(model, train_loader, criterian, optimizer, scheduler, device, epoch, EPOCHS, train_losses, MODEL_NAME, scaler)
-    validate(model, val_loader, device, MODEL_NAME, epoch)
+    train(model, train_loader, criterian, optimizer, scheduler, device, epoch, EPOCHS, train_losses, RESULTS_FOLDER_NAME, scaler)
+    validate(model, val_loader, device, RESULTS_FOLDER_NAME, epoch)
 

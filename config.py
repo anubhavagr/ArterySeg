@@ -9,5 +9,5 @@ VAL_INPUT_PATH = "/media/anubhav/New Volume/Data/qca/dataset/artery/val/input"
 MASK_PATH = "/home/anubhav/Downloads/temp"
 VAL_MASK_PATH = "/media/anubhav/New Volume/Data/qca/dataset/artery/val/mask"
 
-MODEL_NAME = "artery_resnet34_catheter_attention_custom"
+RESULTS_FOLDER_NAME = "results"
 

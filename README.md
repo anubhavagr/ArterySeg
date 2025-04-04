@@ -19,11 +19,18 @@ This project focuses on segmenting arterial structures from medical images using
 ## 📁 Project Structure
 
 .
-├── config.py                # Configuration settings and hyperparameters
-├── dataset.py               # Dataset and data augmentation pipeline using Albumentations
-├── model.py                 # Model architecture with Sobel layer, attention, and ResNet34 backbone
-├── train.py                 # Training and validation routines
-├── utils.py                 # Utility functions (GPU mask creation, RGB palette)
-├── main.py                  # Entry point for training
-├── results/                 # Folder to store validation output images
-└── README.md                # Overview
+├── config.py                    # Configuration settings and hyperparameters
+├── dataset.py                   # Dataset and data augmentation pipeline using Albumentations
+├── model.py                     # Model architecture with Sobel layer, attention, and ResNet34 backbone
+├── model_unet.py                # Unet++ like model architecture with Sobel layer, attention, and ResNet50 backbone
+├── train.py                     # Training and validation routines
+├── utils.py                     # Utility functions (GPU mask creation, RGB palette)
+├── main.py                      # Entry point for training
+├── export_and_benchmark.py      # [Optional] script to convert trained model to TensortRT model(.trt) and compare inference speed with pytorch version
+├── results/                     # Folder to store validation output images
+└── README.md                    # Overview
+
+
+## Note
+
+The model/model_unet import has to matched in main.py and export_and_benchmark.py files.

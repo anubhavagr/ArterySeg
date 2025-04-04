@@ -4,14 +4,18 @@ import os
 import time
 import torch
 import numpy as np
-from model import ArterySegModel, device
-from config import SHAPE, MODEL_NAME
+
+#from model import ArterySegModel, device
+from model_unet import ArterySegModel, device
+#Note- above import should match with main.py
+
+from config import SHAPE, RESULTS_FOLDER_NAME
 import tensorrt as trt
 import pycuda.driver as cuda
 import pycuda.autoinit
 
 # Load trained model and weights
-weight_path = f"logs/0_finalized_seg_{MODEL_NAME}.pth"
+weight_path = f"logs/0_finalized_seg_{RESULTS_FOLDER_NAME}.pth"
 model = ArterySegModel(in_ch=1, sobel_ch=64)
 model.load_state_dict(torch.load(weight_path, map_location=device))
 model.to(device)
