@@ -8,7 +8,7 @@ from config import SHAPE
 
 # Headings: Albumentations Transform
 album_transform = A.Compose([
-    A.RandomResizedCrop(height=SHAPE[0], width=SHAPE[1], always_apply=True, p=0.4),
+#    A.RandomResizedCrop(height=SHAPE[0], width=SHAPE[1], always_apply=True, p=0.4),
     A.Flip(p=0.1),
     A.ShiftScaleRotate(shift_limit=0.0625, scale_limit=0.2, rotate_limit=45, p=0.2),
     A.OneOf([

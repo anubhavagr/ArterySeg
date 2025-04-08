@@ -4,7 +4,7 @@ import numpy as np
 import cv2
 import torch
 from tqdm import tqdm
-from utils import create_mask_gpu, rgb_palette
+from utils import create_mask_gpu, rgb_palette,rgb_to_5_channels
 
 # Headings: Training Function
 def train(model, train_loader, criterion, optimizer, scheduler, device, epoch, EPOCHS, train_losses, model_name, scaler):
@@ -15,12 +15,13 @@ def train(model, train_loader, criterion, optimizer, scheduler, device, epoch, E
     progress_bar = tqdm(train_loader, desc=f"Training Epoch {epoch+1}/{EPOCHS}")
     for images, masks in progress_bar:
         images = images.to(device, non_blocking=True)
-        masks = masks.to(device, non_blocking=True)
-        one_hot_mask = create_mask_gpu(masks, device)
+        masks = masks.to(device, non_blocking=True).permute(0,3,1,2)    #(b,h,w,c)->(b,c,h,w)
+#        one_hot_mask = create_mask_gpu(masks, device)    # cbDice loss code
         optimizer.zero_grad(set_to_none=True)
         with torch.cuda.amp.autocast():
             outputs = model(images)
-            loss = criterion(outputs, one_hot_mask.long())
+            loss = criterion(outputs, rgb_to_5_channels(masks))     # HybridLoss code
+#            loss = criterion(outputs, one_hot_mask.long())   # cbDice loss code
         scaler.scale(loss).backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), 3.0)
         scaler.step(optimizer)
